@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # Dodajemy poprawny import BeautifulSoup
 from flask import Flask, jsonify, request
 import datetime
 import logging
