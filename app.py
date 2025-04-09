@@ -6,7 +6,7 @@ from flask_cors import CORS
 import datetime
 
 app = Flask(__name__)
-CORS(app)  # <-- To umożliwia dostęp z frontendu (np. z gabinet.5v.pl)
+CORS(app)  # To umożliwia dostęp z frontendu (np. z gabinet.5v.pl)
 
 # Funkcja do pobierania transmisji z ProgramTV (naziemna)
 def fetch_from_naziemna(date):
@@ -64,6 +64,11 @@ def get_transmissions():
             unique_transmissions.append(trans)
     
     return jsonify(unique_transmissions)
+
+# Dodajemy domyślną stronę główną
+@app.route('/')
+def home():
+    return "API działa! Użyj /transmissions do pobrania transmisji."
 
 # Uruchamianie aplikacji
 if __name__ == "__main__":
