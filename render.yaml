@@ -5,9 +5,9 @@ services:
     plan: free
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python app.py"
-    healthCheckPath: "/"
+    healthCheckPath: "/transmissions"
     envVars:
       - key: FLASK_ENV
-        value: "production"
+        value: production
     branches:
       - main
