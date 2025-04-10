@@ -6,12 +6,17 @@ from flask_cors import CORS
 import datetime
 
 app = Flask(__name__)
-CORS(app)  # To umożliwia dostęp z frontendu (np. z gabinet.5v.pl)
+CORS(app)  # <-- To umożliwia dostęp z frontendu (np. z gabinet.5v.pl)
+
+# Nagłówki do symulowania przeglądarki
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
 
 # Funkcja do pobierania transmisji z ProgramTV (naziemna)
 def fetch_from_naziemna(date):
     url = f"https://programtv.naziemna.info/program/sportnazywo/{date}"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)  # Dodajemy nagłówki
     soup = BeautifulSoup(response.text, 'html.parser')
     
     transmissions = []
@@ -28,7 +33,7 @@ def fetch_from_naziemna(date):
 # Funkcja do pobierania transmisji z Teleman
 def fetch_from_teleman(date):
     url = f"https://www.teleman.pl/sport/{date}"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)  # Dodajemy nagłówki
     soup = BeautifulSoup(response.text, 'html.parser')
     
     transmissions = []
@@ -64,11 +69,6 @@ def get_transmissions():
             unique_transmissions.append(trans)
     
     return jsonify(unique_transmissions)
-
-# Dodajemy domyślną stronę główną
-@app.route('/')
-def home():
-    return "API działa! Użyj /transmissions do pobrania transmisji."
 
 # Uruchamianie aplikacji
 if __name__ == "__main__":
