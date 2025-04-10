@@ -16,7 +16,7 @@ headers = {
 # Funkcja do pobierania transmisji z ProgramTV (naziemna)
 def fetch_from_naziemna(date):
     url = f"https://programtv.naziemna.info/program/sportnazywo/{date}"
-    response = requests.get(url, headers=headers)  # Dodajemy nagłówki
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
     
     transmissions = []
@@ -24,16 +24,15 @@ def fetch_from_naziemna(date):
         time = item.find('td', class_='time').text.strip()
         event = item.find('td', class_='event').text.strip()
         channel = item.find('td', class_='channel').text.strip()
-
-        if 'na żywo' in event.lower() or "live" in event.lower():
-            transmissions.append({"time": time, "event": event, "channel": channel})
+        
+        transmissions.append({"time": time, "event": event, "channel": channel})
     
     return transmissions
 
 # Funkcja do pobierania transmisji z Teleman
 def fetch_from_teleman(date):
     url = f"https://www.teleman.pl/sport/{date}"
-    response = requests.get(url, headers=headers)  # Dodajemy nagłówki
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
     
     transmissions = []
@@ -42,8 +41,7 @@ def fetch_from_teleman(date):
         event = item.find('div', class_='event').text.strip()
         channel = item.find('div', class_='channel').text.strip()
         
-        if 'na żywo' in event.lower() or "live" in event.lower():
-            transmissions.append({"time": time, "event": event, "channel": channel})
+        transmissions.append({"time": time, "event": event, "channel": channel})
     
     return transmissions
 
